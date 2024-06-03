@@ -13,11 +13,52 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 // "https://www.omdbapi.com/?t=gilmore+girls&apikey=6585022c"
 //http://gutendex.com/books?search=machado%20assis");
 @SpringBootApplication
 public class CataLogoLivrosApplication implements CommandLineRunner {
+
+	private final Scanner input = new Scanner(System.in);
+
+    public void menu(){
+
+		String menu = """
+				
+				Seja bem vindo ao Cata-Logo-Livros!
+				
+				Digite 1 para buscar por autor
+				Digite 1 para buscar por autor
+				Digite 0 para sair.
+				
+				""";
+
+		System.out.println(menu);
+        int opcao = input.nextInt();
+
+
+        while (opcao != 0 ){
+
+
+			if (opcao == 1){
+				System.out.println("Digitou 1");
+				break;
+
+			}else if (opcao == 2){
+
+				System.out.println("Digitou 2");
+				break;
+
+			} else {
+				System.out.println("Opção inválida \n" + menu);
+				opcao = input.nextInt();
+
+			}
+		}
+		System.out.println("Até logo");
+
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(CataLogoLivrosApplication.class, args);
@@ -29,6 +70,7 @@ public class CataLogoLivrosApplication implements CommandLineRunner {
 	//@Override
 	public void run(String... args) throws Exception {
 
+		menu();
 		CosumoApi busca = new CosumoApi();
 		ConverteDados conversor = new ConverteDados();
 
@@ -53,5 +95,7 @@ public class CataLogoLivrosApplication implements CommandLineRunner {
 
 
 	}
+
+
 
 }
