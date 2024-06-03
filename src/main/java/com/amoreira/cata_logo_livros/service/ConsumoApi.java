@@ -2,12 +2,11 @@ package com.amoreira.cata_logo_livros.service;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class CosumoApi {
+public class ConsumoApi {
 
    // Define o método obterDados que aceita um parâmetro de endereço
     public String obterDados(String endereco){
