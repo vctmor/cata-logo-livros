@@ -100,7 +100,7 @@ public class Principal {
 
         List<Book> books = new ArrayList<>();
         books = dataBook.stream()
-                .map(b -> new Book())
+                .map(b -> new Book(b))
                 .collect(Collectors.toList());
         books.forEach(System.out::println);
     }
