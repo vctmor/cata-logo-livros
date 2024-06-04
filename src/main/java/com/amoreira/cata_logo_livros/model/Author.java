@@ -1,16 +1,24 @@
 package com.amoreira.cata_logo_livros.model;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "authors")
 public class Author {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long author_id;
 
     private String authorName;
     private Integer yearBirth;
     private Integer yearDeath;
 
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true,
+            fetch = FetchType.EAGER)
     private List<Book> books = new ArrayList<>();
 
     public Author(){}
