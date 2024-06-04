@@ -1,10 +1,9 @@
 package com.amoreira.cata_logo_livros.principal;
 import com.amoreira.cata_logo_livros.model.DadosResposta;
-import com.amoreira.cata_logo_livros.model.DadosResposta;
+import com.amoreira.cata_logo_livros.model.Book;
 import com.amoreira.cata_logo_livros.service.ConsumoApi;
 import com.amoreira.cata_logo_livros.service.ConverteDados;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +13,7 @@ import java.util.stream.Collectors;
 public class Principal {
 
     private final Scanner input = new Scanner(System.in);
-    List<DadosResposta> dataBook = new ArrayList<>();
+    List<DadosResposta> dadosRespostas = new ArrayList<>();
 
     private static final String URL = "https://gutendex.com/books/";
     private static final String URLOption =  "?search=";
@@ -70,9 +69,9 @@ public class Principal {
 
     public void searchBookWeb(){
 
-        DadosResposta data = getDataBook();
+        DadosResposta data = getDadosRespostas();
 
-        dataBook.add(data);
+        dadosRespostas.add(data);
 
         System.out.println("Resposta inteira: " + data );
 
@@ -85,7 +84,7 @@ public class Principal {
     }
 
 
-    private DadosResposta getDataBook(){
+    private DadosResposta getDadosRespostas(){
 
         String URLsearch = input.nextLine();
 
@@ -99,7 +98,7 @@ public class Principal {
     private void listRegistredBooks(){
 
         List<Book> books = new ArrayList<>();
-        books = dataBook.stream()
+        books = dadosRespostas.stream()
                 .map(b -> new Book(b))
                 .collect(Collectors.toList());
         books.forEach(System.out::println);
