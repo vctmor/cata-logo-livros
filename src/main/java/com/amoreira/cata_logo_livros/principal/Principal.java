@@ -1,17 +1,20 @@
 package com.amoreira.cata_logo_livros.principal;
 import com.amoreira.cata_logo_livros.model.DadosResposta;
+import com.amoreira.cata_logo_livros.model.DadosResposta;
 import com.amoreira.cata_logo_livros.service.ConsumoApi;
 import com.amoreira.cata_logo_livros.service.ConverteDados;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 
 public class Principal {
 
     private final Scanner input = new Scanner(System.in);
-    List<DadosResposta> resposta = new ArrayList<>();
+    List<DadosResposta> dataBook = new ArrayList<>();
 
     private static final String URL = "https://gutendex.com/books/";
     private static final String URLOption =  "?search=";
@@ -21,7 +24,7 @@ public class Principal {
 
     ConsumoApi buscar = new ConsumoApi();
     ConverteDados conversor = new ConverteDados();
-    DadosResposta dadosResposta;
+
 
     public void menu(){
 
@@ -47,12 +50,13 @@ public class Principal {
             if (opcao == 1){
                 System.out.println("Digite o título do livro");
 
-                busca();
+                searchBookWeb();
 
             }else if (opcao == 2){
 
                 System.out.println("Digitou 2");
-                break;
+                listRegistredBooks();
+
 
             } else {
                 System.out.println("Opção inválida \n" + menu);
@@ -64,23 +68,41 @@ public class Principal {
 
     }
 
-    public void busca(){
+    public void searchBookWeb(){
+
+        DadosResposta data = getDataBook();
+
+        dataBook.add(data);
+
+        System.out.println("Resposta inteira: " + data );
+
+        //resposta.forEach(t -> t.results().get(0));
+        System.out.println("Resposta parcelada : " + data.results().get(0).tituloLivro() +
+                "\nAutor: " + data.results().get(0).dadosAutor().get(0).nomeAutor());
+
+        //        System.out.println(dadosResposta.results().get(0)
+//                .dadosAutor().get(0).nomeAutor());
+    }
+
+
+    private DadosResposta getDataBook(){
 
         String URLsearch = input.nextLine();
 
         var json = buscar.obterDados(URL+ URLOption +
                 URLsearch.replace(" ", "%20"));
 
-        dadosResposta = conversor.obterDados(json, DadosResposta.class);
+        return conversor.obterDados(json, DadosResposta.class);
 
-        resposta.add(dadosResposta);
+    }
 
-        //resposta.forEach(t -> t.results().get(0));
-        System.out.println("Resposta: " + resposta.get(0).results().get(0).tituloLivro());
+    private void listRegistredBooks(){
 
-        //        System.out.println(dadosResposta.results().get(0)
-//                .dadosAutor().get(0).nomeAutor());
-        dadosResposta.results().forEach(System.out::println);
+        List<Book> books = new ArrayList<>();
+        books = dataBook.stream()
+                .map(b -> new Book(b))
+                .collect(Collectors.toList());
+        books.forEach(System.out::println);
     }
 
 }

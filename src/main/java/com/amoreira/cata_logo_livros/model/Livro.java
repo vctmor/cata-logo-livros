@@ -1,7 +1,5 @@
 package com.amoreira.cata_logo_livros.model;
 
-import java.util.List;
-
 public class Livro {
 
     private String titulo;
@@ -9,12 +7,12 @@ public class Livro {
     private Linguagens linguagem;
     private int nDownloads;
 
-    public Livro(DadosLivro dadosLivro) {
-        String linguagem = dadosLivro.linguagemLivro().get(0);
+    public Livro(DataBook dataBook) {
+        String linguagem = dataBook.linguagemLivro().get(0);
 
-        this.titulo = dadosLivro.tituloLivro();
+        this.titulo = dataBook.tituloLivro();
         this.linguagem = Linguagens.fromString(linguagem);
-        this.nDownloads = dadosLivro.nDownloads();
+        this.nDownloads = dataBook.nDownloads();
     }
 
     public String getTitulo() {

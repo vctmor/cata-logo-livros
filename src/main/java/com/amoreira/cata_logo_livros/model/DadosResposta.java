@@ -8,7 +8,7 @@ import java.util.List;
 // title, author
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record DadosResposta(
-        @JsonAlias("results")List<DadosLivro> results
+        @JsonAlias("results")List<DataBook> results
 ) {}
 
 
