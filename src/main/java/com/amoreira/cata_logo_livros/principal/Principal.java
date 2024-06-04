@@ -77,7 +77,7 @@ public class Principal {
 
         //resposta.forEach(t -> t.results().get(0));
         System.out.println("Resposta parcelada : " + data.results().get(0).tituloLivro() +
-                "\nAutor: " + data.results().get(0).dadosAutor().get(0).nomeAutor());
+                "\nAutor: " + data.results().get(0).dataAuthor().get(0).nomeAutor());
 
         //        System.out.println(dadosResposta.results().get(0)
 //                .dadosAutor().get(0).nomeAutor());

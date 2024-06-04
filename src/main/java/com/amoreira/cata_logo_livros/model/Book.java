@@ -1,7 +1,5 @@
 package com.amoreira.cata_logo_livros.model;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -13,13 +11,13 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long book_id;
     private String titulo;
     private Linguagens linguagem;
     private int nDownloads;
 
     @ManyToOne
-    @JoinColumn(name = "author_d", nullable = false)
+    @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 
     public Book(){}
@@ -47,13 +45,13 @@ public class Book {
         return author;
     }
 
-    public void setAutor(Author autor) {
+    public void setAutor(Author author) {
         this.author = author;
     }
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "Book" +
                 "titulo='" + titulo + '\'' +
                 ", autor='" + author + '\'' +
                 ", linguagem=" + linguagem +

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record DataBook(
         @JsonAlias("title") String tituloLivro,
-        @JsonAlias("authors")List<DadosAutor> dadosAutor,
+        @JsonAlias("authors")List<DataAuthor> dataAuthor,
         @JsonAlias("languages")List<String> linguagemLivro,
         @JsonAlias("download_count") Integer nDownloads){
 }
