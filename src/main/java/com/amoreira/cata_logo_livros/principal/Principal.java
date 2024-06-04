@@ -4,9 +4,11 @@ import com.amoreira.cata_logo_livros.model.DadosResposta;
 import com.amoreira.cata_logo_livros.service.ConsumoApi;
 import com.amoreira.cata_logo_livros.service.ConverteDados;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 
 public class Principal {
@@ -53,8 +55,8 @@ public class Principal {
             }else if (opcao == 2){
 
                 System.out.println("Digitou 2");
+                listRegistredBooks();
 
-                break;
 
             } else {
                 System.out.println("Opção inválida \n" + menu);
@@ -92,6 +94,15 @@ public class Principal {
 
         return conversor.obterDados(json, DadosResposta.class);
 
+    }
+
+    private void listRegistredBooks(){
+
+        List<Book> books = new ArrayList<>();
+        books = dataBook.stream()
+                .map(b -> new Book())
+                .collect(Collectors.toList());
+        books.forEach(System.out::println);
     }
 
 }
