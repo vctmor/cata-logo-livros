@@ -1,10 +1,13 @@
 package com.amoreira.cata_logo_livros;
 
+import com.amoreira.cata_logo_livros.Repository.AuthorRepository;
+import com.amoreira.cata_logo_livros.Repository.BookRepository;
 import com.amoreira.cata_logo_livros.model.DadosResposta;
 import com.amoreira.cata_logo_livros.principal.Principal;
 import com.amoreira.cata_logo_livros.service.ConverteDados;
 import com.amoreira.cata_logo_livros.service.ConsumoApi;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,40 +27,17 @@ public class CataLogoLivrosApplication implements CommandLineRunner {
 		SpringApplication.run(CataLogoLivrosApplication.class, args);
 	}
 
-	private static final String URL2 ="https://www.omdbapi.com/?t=gilmore+girls&apikey=6585022c";
-	private static final String URL3 = "https://gutendex.com/books/";
-	private static final String URL4 = "https://gutendex.com/books/" + "?search=quincas%20borba";
+	@Autowired
+	private BookRepository bookRepository;
+	@Autowired
+	private AuthorRepository authorRepository;
+
 	//@Override
 	public void run(String... args) throws Exception {
 
-		Principal start = new Principal();
+		Principal start = new Principal(bookRepository,authorRepository);
 
 		start.menu();
-
-//		ConsumoApi busca = new ConsumoApi();
-//		ConverteDados conversor = new ConverteDados();
-//
-//		var json = busca.obterDados(URL4);
-//		System.out.println("Os dados:");
-//		System.out.println(json);
-//
-//		DadosResposta dadosResposta = conversor.obterDados(json, DadosResposta.class) ;
-//
-//		System.out.println(dadosResposta);
-//
-//		List<DadosResposta> resposta = new ArrayList<>();
-//
-//		resposta.add(dadosResposta);
-//
-//		System.out.println(resposta.get(0).results().get(0).tituloLivro());
-
-
-
-
-
-
 	}
-
-
 
 }

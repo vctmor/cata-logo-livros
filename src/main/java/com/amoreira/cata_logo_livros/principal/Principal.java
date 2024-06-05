@@ -1,4 +1,6 @@
 package com.amoreira.cata_logo_livros.principal;
+import com.amoreira.cata_logo_livros.Repository.AuthorRepository;
+import com.amoreira.cata_logo_livros.Repository.BookRepository;
 import com.amoreira.cata_logo_livros.model.DadosResposta;
 import com.amoreira.cata_logo_livros.model.Book;
 import com.amoreira.cata_logo_livros.service.ConsumoApi;
@@ -23,6 +25,14 @@ public class Principal {
 
     ConsumoApi buscar = new ConsumoApi();
     ConverteDados conversor = new ConverteDados();
+
+    private BookRepository bookRepository;
+    private AuthorRepository authorRepository;
+
+    public Principal(BookRepository bookRepository, AuthorRepository authorRepository){
+        this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
+    }
 
 
     public void menu(){
