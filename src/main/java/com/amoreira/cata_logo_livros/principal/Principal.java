@@ -56,7 +56,6 @@ public class Principal {
                 System.out.println("Digitou 2");
                 listRegistredBooks();
 
-
             } else {
                 System.out.println("Opção inválida \n" + menu);
                 opcao = input.nextInt();
