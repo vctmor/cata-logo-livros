@@ -1,21 +1,22 @@
 package com.amoreira.cata_logo_livros.principal;
 import com.amoreira.cata_logo_livros.Repository.AuthorRepository;
 import com.amoreira.cata_logo_livros.Repository.BookRepository;
-import com.amoreira.cata_logo_livros.model.DadosResposta;
+import com.amoreira.cata_logo_livros.model.Author;
 import com.amoreira.cata_logo_livros.model.Book;
+
+import com.amoreira.cata_logo_livros.model.DataResponse;
 import com.amoreira.cata_logo_livros.service.ConsumoApi;
 import com.amoreira.cata_logo_livros.service.ConverteDados;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 
 public class Principal {
 
     private final Scanner input = new Scanner(System.in);
-    List<DadosResposta> dadosRespostas = new ArrayList<>();
+    List<DataResponse> dataResponses = new ArrayList<>();
 
     private static final String URL = "https://gutendex.com/books/";
     private static final String URLOption =  "?search=";
@@ -76,41 +77,52 @@ public class Principal {
 
     }
 
-    public void searchBookWeb(){
-
-        DadosResposta data = getDadosRespostas();
-
-        dadosRespostas.add(data);
-
-        System.out.println("Resposta inteira: " + data );
-
-        //resposta.forEach(t -> t.results().get(0));
-        System.out.println("Resposta parcelada : " + data.results().get(0).tituloLivro() +
-                "\nAutor: " + data.results().get(0).dataAuthor().get(0).nomeAutor());
-
-        //        System.out.println(dadosResposta.results().get(0)
-//                .dadosAutor().get(0).nomeAutor());
-    }
-
-
-    private DadosResposta getDadosRespostas(){
+    private DataResponse getDadosRespostas(){
 
         String URLsearch = input.nextLine();
 
         var json = buscar.obterDados(URL+ URLOption +
                 URLsearch.replace(" ", "%20"));
 
-        return conversor.obterDados(json, DadosResposta.class);
+        return conversor.obterDados(json, DataResponse.class);
 
+    }
+
+    public void searchBookWeb(){
+
+        DataResponse data = getDadosRespostas();
+        System.out.println("Resposta inteira: " + data );
+
+        Book book = new Book(data.results().get(0));
+        System.out.println("\n" + "Livros: " + book);
+
+
+        Author author = new Author(data.results().get(0).dataAuthor().get(0));
+
+        //dadosRespostas.add(data);
+        System.out.println("\n" + "Author: " + author);
+        authorRepository.save(author);
+        bookRepository.save(book);
+
+
+
+
+        //resposta.forEach(t -> t.results().get(0));
+//        System.out.println("Resposta parcelada : " + data.results().get(0).titleBook() +
+//                "\nAutor: " + data.results().get(0).dataAuthor().get(0).nameAuthor());
+
+        //        System.out.println(dadosResposta.results().get(0)
+//                .dadosAutor().get(0).nameAuthor());
     }
 
     private void listRegistredBooks(){
 
-        List<Book> books = new ArrayList<>();
-        books = dadosRespostas.stream()
-                .map(b -> new Book(b))
-                .collect(Collectors.toList());
-        books.forEach(System.out::println);
+//        List<Book> books = new ArrayList<>();
+//        books = dadosRespostas.stream()
+//                .map(b -> new Book(getDadosRespostas()))
+//                .collect(Collectors.toList());
+//        books.forEach(System.out::println);
+
     }
 
 }

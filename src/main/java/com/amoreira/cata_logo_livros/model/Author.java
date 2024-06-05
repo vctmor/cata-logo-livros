@@ -23,11 +23,11 @@ public class Author {
 
     public Author(){}
 
-    public Author(DataAuthor data){
+    public Author(DataAuthor dataAuthor){
 
-        this.authorName = data.nomeAutor();
-        this.yearBirth = (data.anoNascimento() != null) ? data.anoNascimento():0 ;
-        this.yearDeath = (data.anoMorte() != null)? data.anoMorte() : 0;
+        this.authorName = (dataAuthor.nameAuthor() != null) ? dataAuthor.nameAuthor():"N/A" ; //dataAuthor.results().get(0);
+        this.yearBirth = (dataAuthor.yearBirth() != null) ? dataAuthor.yearBirth():0 ;
+        this.yearDeath = (dataAuthor.yearDeath() != null)? dataAuthor.yearDeath() : 0;
     }
 
     public Long getAuthor_id() {
@@ -73,10 +73,10 @@ public class Author {
     @Override
     public String toString() {
         return "\n------------ Autor ------------\n" +
-                "Nome : '" + authorName + '\'' +
-                ", Ano do nascimento: " + yearBirth +
-                ", Ano da morte: " + yearDeath +
-                ", Livros registrados: " + books + //(libros != null ? libros.stream().map(Libro::getTituloLibro).collect(Collectors.toList()) : "Sin libros") + '\n'
+                "Nome : '" + authorName + '\'' + "\n" +
+                ", Ano do nascimento: " + yearBirth + "\n" +
+                ", Ano da morte: " + yearDeath + "\n" +
+                ", Livros registrados: " + books + "\n" +//(libros != null ? libros.stream().map(Libro::getTituloLibro).collect(Collectors.toList()) : "Sin libros") + '\n'
                 "--------------------------------\n";
     }
 }

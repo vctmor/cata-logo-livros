@@ -7,7 +7,7 @@ import java.util.List;
 
 // title, author
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record DadosResposta(
+public record DataResponse(
         @JsonAlias("results")List<DataBook> results
 ) {}
 
