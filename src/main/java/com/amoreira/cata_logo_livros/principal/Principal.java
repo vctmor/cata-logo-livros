@@ -4,10 +4,12 @@ import com.amoreira.cata_logo_livros.Repository.BookRepository;
 import com.amoreira.cata_logo_livros.model.Author;
 import com.amoreira.cata_logo_livros.model.Book;
 
+import com.amoreira.cata_logo_livros.model.DataAuthor;
 import com.amoreira.cata_logo_livros.model.DataResponse;
 import com.amoreira.cata_logo_livros.service.ConsumoApi;
 import com.amoreira.cata_logo_livros.service.ConverteDados;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -88,23 +90,34 @@ public class Principal {
 
     }
 
-    public void searchBookWeb(){
+    public void searchBookWeb() {
 
         DataResponse data = getDadosRespostas();
-        System.out.println("Resposta inteira: " + data );
+        System.out.println("Resposta inteira: " + data);
+        relationBookWithAuthor(data);
 
-        Book book = new Book(data.results().get(0));
-        System.out.println("\n" + "Livros: " + book);
+//        Book book = new Book(data.results().get(0));
+//        System.out.println("\n" + "Livros: " + book);
+//
+//
+//        Author author = new Author(data.results().get(0).dataAuthor().get(0));
+//
+//        //dadosRespostas.add(data);
+//        System.out.println("\n" + "Author: " + author);
+//        authorRepository.save(author);
+//        bookRepository.save(book);
+    }
+    public void relationBookWithAuthor(DataResponse data ) {
+        DataAuthor dataAutor = data.results().get(0).dataAuthor().get(0);
+        //new Author(dataAutor);
+        Author author = new Author(dataAutor);
+        Book book = new Book(data.results().get(0),author);
 
-
-        Author author = new Author(data.results().get(0).dataAuthor().get(0));
-
-        //dadosRespostas.add(data);
-        System.out.println("\n" + "Author: " + author);
+        author.setAuthorName(data.results().get(0).dataAuthor().get(0).nameAuthor());
         authorRepository.save(author);
+
         bookRepository.save(book);
-
-
+        }
 
 
         //resposta.forEach(t -> t.results().get(0));
@@ -113,7 +126,7 @@ public class Principal {
 
         //        System.out.println(dadosResposta.results().get(0)
 //                .dadosAutor().get(0).nameAuthor());
-    }
+
 
     private void listRegistredBooks(){
 

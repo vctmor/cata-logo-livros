@@ -20,12 +20,11 @@ public class Book {
 
     public Book(){}
 
-    public Book(DataBook dataBook) {
+    public Book(DataBook dataBook, Author author) {
 
-        //List<DataBook> db = Collections.singletonList(dataBook.results().get(0));
         String language = dataBook.languageBook().get(0); //String.valueOf(dataBook.languageBook());
         this.language = Languages.fromString(language);
-
+        this.author = author;
         //this.author = //(author.getAuthorName() != null ? dataBook.dataAuthor().get(0).nameAuthor() : "Sem autor")
 
         this.title = dataBook.titleBook(); //db.get(0).titleBook();

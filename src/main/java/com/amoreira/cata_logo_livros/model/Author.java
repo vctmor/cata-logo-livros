@@ -26,7 +26,7 @@ public class Author {
     public Author(DataAuthor dataAuthor){
 
         this.authorName = (dataAuthor.nameAuthor() != null) ? dataAuthor.nameAuthor():"N/A" ; //dataAuthor.results().get(0);
-        this.yearBirth = (dataAuthor.yearBirth() != null) ? dataAuthor.yearBirth():0 ;
+        this.yearBirth = (dataAuthor.yearBirth()!= null) ? dataAuthor.yearBirth():0 ;
         this.yearDeath = (dataAuthor.yearDeath() != null)? dataAuthor.yearDeath() : 0;
     }
 
