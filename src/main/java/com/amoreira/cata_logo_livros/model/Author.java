@@ -11,7 +11,7 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long author_id;
+    private Long id;
 
     private String authorName;
     private Integer yearBirth;
@@ -30,12 +30,12 @@ public class Author {
         this.yearDeath = (dataAuthor.yearDeath() != null)? dataAuthor.yearDeath() : 0;
     }
 
-    public Long getAuthor_id() {
-        return author_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setAuthor_id(Long author_id) {
-        this.author_id = author_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAuthorName() {
@@ -66,8 +66,13 @@ public class Author {
         return books;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
+//    public void setBooks(List<Book> books) {
+//        //books.forEach(b -> b.setAuthor(this));
+//        this.books = books;
+//    }
+    public void setBooks(Book book){
+        book.setAuthor(this);
+        this.books.add(book);
     }
 
     @Override

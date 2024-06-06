@@ -1,5 +1,4 @@
 package com.amoreira.cata_logo_livros.model;
-import com.amoreira.cata_logo_livros.model.Author;
 
 import jakarta.persistence.*;
 
@@ -9,14 +8,14 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long book_id;
+    private Long id;
     private String title;
     private Languages language;
     private int nDownloads;
 
 
     @ManyToOne
-    @JoinColumn(name = "author", nullable = false)
+    //@JoinColumn(name = "author_id", nullable = false)
     private Author author;
 
     public Book(){}
@@ -34,12 +33,12 @@ public class Book {
         this.nDownloads = dataBook.nDownloads(); //db.get(0).nDownloads();
     }
 
-    public Long getBook_id() {
-        return book_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setBook_id(Long book_id) {
-        this.book_id = book_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
