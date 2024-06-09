@@ -80,14 +80,18 @@ public class Principal {
                     listRegistredBooks();
                     break;
                 case 3:
-                    System.out.print("\nListando autores registrados em ordem alfabética:\n");
+                    System.out.print("\nDigite o ano: ");
                     listRegisteredAuthors();
+                    System.out.println("\nListando autores registrados em ordem alfabética:\n");
+
                     break;
                 case 4:
-                    System.out.println("Você escolheu a opção 4.");
+
+                    System.out.print("Digite a data: ");
+                    listRegisteredLivingAuthorGivenYear();
                     break;
                 case 5:
-                    System.out.println("Você escolheu a opção 5.");
+                    System.out.println("\nListando livros em um determinado idioma.");
                     break;
                 default:
                     System.out.println("Opção inválida \n" + menu);
@@ -147,6 +151,18 @@ public class Principal {
                 .sorted(Comparator.comparing(Author::getAuthorName))
                 .forEach(System.out::println);
 
+    }
+
+    private void listRegisteredLivingAuthorGivenYear(){
+
+        Integer year = input.nextInt();
+
+        authors = authorRepository.findAll();
+        authors.stream()
+                .filter(a ->a.getYearDeath() != null || a.getYearBirth() != null)
+                .filter(a -> year >= a.getYearBirth() &&   year <= a.getYearDeath() )
+                .sorted(Comparator.comparing(Author::getAuthorName))
+                .forEach(System.out::println);
     }
 
 }
