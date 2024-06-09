@@ -68,21 +68,32 @@ public class Principal {
             opcao = input.nextInt();
             input.nextLine();
 
-            if (opcao == 1){
-                System.out.print("\n Digite o título do livro: ");
+            switch (opcao) {
 
-                searchBookWeb();
-
-            }else if (opcao == 2){
-
-                System.out.println("Digitou 2");
-                listRegistredBooks();
-
-            } else {
-                System.out.println("Opção inválida \n" + menu);
-                opcao = input.nextInt();
+                case 1:
+                    System.out.print("\n Digite o título do livro: ");
+                    searchBookWeb();
+                    break;
+                case 2:
+                    System.out.println("Digitou 2");
+                    listRegistredBooks();
+                    break;
+                case 3:
+                    System.out.println("Você escolheu a opção 3.");
+                    break;
+                case 4:
+                    System.out.println("Você escolheu a opção 4.");
+                    break;
+                case 5:
+                    System.out.println("Você escolheu a opção 5.");
+                    break;
+                default:
+                    System.out.println("Opção inválida \n" + menu);
+                    opcao = input.nextInt();
+                    break;
 
             }
+
         }
         System.out.println("Até logo");
 
