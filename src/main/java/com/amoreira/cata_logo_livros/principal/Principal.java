@@ -11,14 +11,17 @@ import com.amoreira.cata_logo_livros.service.ConverteDados;
 
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 
 public class Principal {
 
     private final Scanner input = new Scanner(System.in);
     List<DataResponse> dataResponses = new ArrayList<>();
+    List<Book> books = new ArrayList<>();
 
     private static final String URL = "https://gutendex.com/books/";
     private static final String URLOption =  "?search=";
@@ -37,30 +40,36 @@ public class Principal {
         this.authorRepository = authorRepository;
     }
 
-
     public void menu(){
 
         String menu = """
-				 /////////////////////////////////////
-				< Seja bem vindo ao Cata-Logo-Livros! >
-				 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+                 /////////////////////////////////////
+                        < Seja bem vindo 
+                                ao 
+                        Cata-Logo-Livros! >
+                 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 				 
 				1. busca livro pelo título;
 				2. lista livros registrados;
 				3. lista autores registrados;
+				4. listar autores vivos em determinado ano
+				5. listrar livros em um determinado idioma
 				
 				Digite 0 para sair.
 				_____________________________________
+				
 				""";
 
         while (opcao != 0 ){
 
             System.out.println(menu);
+            System.out.print("Digite a sua opção: ");
+
             opcao = input.nextInt();
             input.nextLine();
 
             if (opcao == 1){
-                System.out.println("Digite o título do livro");
+                System.out.print("\n Digite o título do livro: ");
 
                 searchBookWeb();
 
@@ -96,16 +105,6 @@ public class Principal {
         System.out.println("Resposta inteira: " + data);
         relationBookWithAuthor(data);
 
-//        Book book = new Book(data.results().get(0));
-//        System.out.println("\n" + "Livros: " + book);
-//
-//
-//        Author author = new Author(data.results().get(0).dataAuthor().get(0));
-//
-//        //dadosRespostas.add(data);
-//        System.out.println("\n" + "Author: " + author);
-//        authorRepository.save(author);
-//        bookRepository.save(book);
     }
     public void relationBookWithAuthor(DataResponse data ) {
         DataAuthor dataAutor = data.results().get(0).dataAuthor().get(0);
@@ -119,22 +118,12 @@ public class Principal {
         bookRepository.save(book);
         }
 
-
-        //resposta.forEach(t -> t.results().get(0));
-//        System.out.println("Resposta parcelada : " + data.results().get(0).titleBook() +
-//                "\nAutor: " + data.results().get(0).dataAuthor().get(0).nameAuthor());
-
-        //        System.out.println(dadosResposta.results().get(0)
-//                .dadosAutor().get(0).nameAuthor());
-
-
     private void listRegistredBooks(){
 
-//        List<Book> books = new ArrayList<>();
-//        books = dadosRespostas.stream()
-//                .map(b -> new Book(getDadosRespostas()))
-//                .collect(Collectors.toList());
-//        books.forEach(System.out::println);
+    books = bookRepository.findAll();
+    books.stream()
+            .sorted(Comparator.comparing(Book::getTitle))
+            .forEach(System.out::println);
 
     }
 
