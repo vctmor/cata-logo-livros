@@ -1,11 +1,8 @@
 package com.amoreira.cata_logo_livros.principal;
 import com.amoreira.cata_logo_livros.Repository.AuthorRepository;
 import com.amoreira.cata_logo_livros.Repository.BookRepository;
-import com.amoreira.cata_logo_livros.model.Author;
-import com.amoreira.cata_logo_livros.model.Book;
+import com.amoreira.cata_logo_livros.model.*;
 
-import com.amoreira.cata_logo_livros.model.DataAuthor;
-import com.amoreira.cata_logo_livros.model.DataResponse;
 import com.amoreira.cata_logo_livros.service.ConsumoApi;
 import com.amoreira.cata_logo_livros.service.ConverteDados;
 
@@ -91,7 +88,8 @@ public class Principal {
                     listRegisteredLivingAuthorGivenYear();
                     break;
                 case 5:
-                    System.out.println("\nListando livros em um determinado idioma.");
+                    System.out.print("Digite o idioma: ");
+                    listRegisteredBookGivenLanguage();
                     break;
                 default:
                     System.out.println("Opção inválida \n" + menu);
@@ -155,7 +153,7 @@ public class Principal {
 
     private void listRegisteredLivingAuthorGivenYear(){
 
-        Integer year = input.nextInt();
+        int year = input.nextInt();
 
         authors = authorRepository.findAll();
         authors.stream()
@@ -163,6 +161,30 @@ public class Principal {
                 .filter(a -> year >= a.getYearBirth() &&   year <= a.getYearDeath() )
                 .sorted(Comparator.comparing(Author::getAuthorName))
                 .forEach(System.out::println);
+    }
+
+    private void listRegisteredBookGivenLanguage(){
+
+        //TODO: entender a relação Book-Language
+
+        String langage = input.nextLine();
+
+        String idioma = input.nextLine();
+
+        List<Book> booksByLanguage = bookRepository.findAll();
+        booksByLanguage.stream()
+                .filter(l -> l.getLanguage().equals(Languages.fromString(langage)))
+                .toList();
+
+        booksByLanguage.stream()
+                .sorted(Comparator.comparing(Book::getTitle))
+                .forEach(System.out::println);
+
+//        books = bookRepository.findAll();
+//        books.stream()
+//                .filter(b -> b.getLanguage() != null)
+//                .
+
     }
 
 }
