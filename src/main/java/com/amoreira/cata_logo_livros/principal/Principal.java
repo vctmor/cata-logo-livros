@@ -22,6 +22,7 @@ public class Principal {
     private final Scanner input = new Scanner(System.in);
     List<DataResponse> dataResponses = new ArrayList<>();
     List<Book> books = new ArrayList<>();
+    List<Author> authors = new ArrayList<>();
 
     private static final String URL = "https://gutendex.com/books/";
     private static final String URLOption =  "?search=";
@@ -75,11 +76,12 @@ public class Principal {
                     searchBookWeb();
                     break;
                 case 2:
-                    System.out.println("Digitou 2");
+
                     listRegistredBooks();
                     break;
                 case 3:
-                    System.out.println("Você escolheu a opção 3.");
+                    System.out.print("\nListando autores registrados em ordem alfabética:\n");
+                    listRegisteredAuthors();
                     break;
                 case 4:
                     System.out.println("Você escolheu a opção 4.");
@@ -135,6 +137,15 @@ public class Principal {
     books.stream()
             .sorted(Comparator.comparing(Book::getTitle))
             .forEach(System.out::println);
+
+    }
+
+    private void listRegisteredAuthors(){
+
+        authors = authorRepository.findAll();
+        authors.stream()
+                .sorted(Comparator.comparing(Author::getAuthorName))
+                .forEach(System.out::println);
 
     }
 
