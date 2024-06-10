@@ -1,11 +1,8 @@
 package com.amoreira.cata_logo_livros.principal;
 import com.amoreira.cata_logo_livros.Repository.AuthorRepository;
 import com.amoreira.cata_logo_livros.Repository.BookRepository;
-import com.amoreira.cata_logo_livros.model.Author;
-import com.amoreira.cata_logo_livros.model.Book;
+import com.amoreira.cata_logo_livros.model.*;
 
-import com.amoreira.cata_logo_livros.model.DataAuthor;
-import com.amoreira.cata_logo_livros.model.DataResponse;
 import com.amoreira.cata_logo_livros.service.ConsumoApi;
 import com.amoreira.cata_logo_livros.service.ConverteDados;
 
@@ -22,6 +19,7 @@ public class Principal {
     private final Scanner input = new Scanner(System.in);
     List<DataResponse> dataResponses = new ArrayList<>();
     List<Book> books = new ArrayList<>();
+    List<Author> authors = new ArrayList<>();
 
     private static final String URL = "https://gutendex.com/books/";
     private static final String URLOption =  "?search=";
@@ -68,21 +66,38 @@ public class Principal {
             opcao = input.nextInt();
             input.nextLine();
 
-            if (opcao == 1){
-                System.out.print("\n Digite o título do livro: ");
+            switch (opcao) {
 
-                searchBookWeb();
+                case 1:
+                    System.out.print("\n Digite o título do livro: ");
+                    searchBookWeb();
+                    break;
+                case 2:
 
-            }else if (opcao == 2){
+                    listRegistredBooks();
+                    break;
+                case 3:
+                    System.out.print("\nDigite o ano: ");
+                    listRegisteredAuthors();
+                    System.out.println("\nListando autores registrados em ordem alfabética:\n");
 
-                System.out.println("Digitou 2");
-                listRegistredBooks();
+                    break;
+                case 4:
 
-            } else {
-                System.out.println("Opção inválida \n" + menu);
-                opcao = input.nextInt();
+                    System.out.print("Digite a data: ");
+                    listRegisteredLivingAuthorGivenYear();
+                    break;
+                case 5:
+                    System.out.print("Digite o idioma: ");
+                    listRegisteredBookGivenLanguage();
+                    break;
+                default:
+                    System.out.println("Opção inválida \n" + menu);
+                    opcao = input.nextInt();
+                    break;
 
             }
+
         }
         System.out.println("Até logo");
 
@@ -92,8 +107,11 @@ public class Principal {
 
         String URLsearch = input.nextLine();
 
-        var json = buscar.obterDados(URL+ URLOption +
-                URLsearch.replace(" ", "%20"));
+        var json = "{\"count\":73658,\"next\":\"https://gutendex.com/books/?page=2\",\"previous\":null,\"results\":[{\"id\":84,\"title\":\"Frankenstein; Or, The Modern Prometheus\",\"authors\":[{\"name\":\"Shelley, Mary Wollstonecraft\",\"birth_year\":1797,\"death_year\":1851}],\"languages\":[\"en\"], {\"dowload_count\": 222}}]}";
+        json = "{\"count\":73658,\"next\":\"https://gutendex.com/books/?page=2\",\"previous\":null,\"results\":[{\"id\":85,\"title\":\"Quincas Borba\",\"authors\":[{\"name\":\"Assis, Machado\",\"birth_year\":1839,\"death_year\":1915}],\"languages\":[\"pt\"], {\"dowload_count\": 1111}}]}";
+
+//        var json = buscar.obterDados(URL+ URLOption +
+//                URLsearch.replace(" ", "%20"));
 
         return conversor.obterDados(json, DataResponse.class);
 
@@ -124,6 +142,53 @@ public class Principal {
     books.stream()
             .sorted(Comparator.comparing(Book::getTitle))
             .forEach(System.out::println);
+
+    }
+
+    private void listRegisteredAuthors(){
+
+        authors = authorRepository.findAll();
+        authors.stream()
+                .sorted(Comparator.comparing(Author::getAuthorName))
+                .forEach(System.out::println);
+
+    }
+
+    private void listRegisteredLivingAuthorGivenYear(){
+
+        int year = input.nextInt();
+
+        authors = authorRepository.findAll();
+        authors.stream()
+                .filter(a ->a.getYearDeath() != null || a.getYearBirth() != null)
+                .filter(a -> year >= a.getYearBirth() &&   year <= a.getYearDeath() )
+                .sorted(Comparator.comparing(Author::getAuthorName))
+                .forEach(System.out::println);
+    }
+
+    private void listRegisteredBookGivenLanguage(){
+
+        //TODO: entender a relação Book-Language
+
+        String langage = input.nextLine();
+        List<Book> booksRegistred = bookRepository.findAll();
+
+        List<Book> booksByLanguage = booksRegistred.stream()
+                        .filter(l -> l.getLanguage().equals(Languages.fromString(langage)))
+                                .toList();
+
+
+        System.out.println("\n-------------- Livros em" + Languages.fromString(langage)
+                .toString().toLowerCase());
+
+        booksByLanguage.stream()
+                .sorted(Comparator.comparing(Book::getTitle))
+                .forEach(System.out::println);
+
+//        books = bookRepository.findAll();
+//        books.stream()
+//                .filter(b -> b.getLanguage() != null)
+//                .
 
     }
 
