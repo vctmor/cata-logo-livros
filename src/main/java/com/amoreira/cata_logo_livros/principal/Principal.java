@@ -171,13 +171,15 @@ public class Principal {
         //TODO: entender a relação Book-Language
 
         String langage = input.nextLine();
+        List<Book> booksRegistred = bookRepository.findAll();
 
-        String idioma = input.nextLine();
+        List<Book> booksByLanguage = booksRegistred.stream()
+                        .filter(l -> l.getLanguage().equals(Languages.fromString(langage)))
+                                .toList();
 
-        List<Book> booksByLanguage = bookRepository.findAll();
-        booksByLanguage.stream()
-                .filter(l -> l.getLanguage().equals(Languages.fromString(langage)))
-                .toList();
+
+        System.out.println("\n-------------- Livros em" + Languages.fromString(langage)
+                .toString().toLowerCase());
 
         booksByLanguage.stream()
                 .sorted(Comparator.comparing(Book::getTitle))
