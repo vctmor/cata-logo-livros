@@ -79,9 +79,9 @@ public class Author {
     public String toString() {
         return "\n------------ Autor ------------\n" +
                 "Nome : '" + authorName + '\'' + "\n" +
-                ", Ano do nascimento: " + yearBirth + "\n" +
-                ", Ano da morte: " + yearDeath + "\n" +
-                ", Livros registrados: " + books + "\n" +//(libros != null ? libros.stream().map(Libro::getTituloLibro).collect(Collectors.toList()) : "Sin libros") + '\n'
+                "Ano do nascimento: " + yearBirth + "\n" +
+                "Ano da morte: " + yearDeath + "\n" +
+                "Livros registrados: " + books + "\n" +//(libros != null ? libros.stream().map(Libro::getTituloLibro).collect(Collectors.toList()) : "Sin libros") + '\n'
                 "--------------------------------\n";
     }
 }
