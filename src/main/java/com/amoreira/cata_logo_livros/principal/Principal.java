@@ -107,8 +107,11 @@ public class Principal {
 
         String URLsearch = input.nextLine();
 
-        var json = buscar.obterDados(URL+ URLOption +
-                URLsearch.replace(" ", "%20"));
+        var json = "{\"count\":73658,\"next\":\"https://gutendex.com/books/?page=2\",\"previous\":null,\"results\":[{\"id\":84,\"title\":\"Frankenstein; Or, The Modern Prometheus\",\"authors\":[{\"name\":\"Shelley, Mary Wollstonecraft\",\"birth_year\":1797,\"death_year\":1851}],\"languages\":[\"en\"], {\"dowload_count\": 222}}]}";
+        json = "{\"count\":73658,\"next\":\"https://gutendex.com/books/?page=2\",\"previous\":null,\"results\":[{\"id\":85,\"title\":\"Quincas Borba\",\"authors\":[{\"name\":\"Assis, Machado\",\"birth_year\":1839,\"death_year\":1915}],\"languages\":[\"pt\"], {\"dowload_count\": 1111}}]}";
+
+//        var json = buscar.obterDados(URL+ URLOption +
+//                URLsearch.replace(" ", "%20"));
 
         return conversor.obterDados(json, DataResponse.class);
 
